@@ -9,11 +9,11 @@ An alert from the Intrusion Detection System (IDS) flagged suspicious lateral mo
 
 Going to *`Statistics -> Endpoints -> IPs`*, We have 6 unique ip address possibly from the same subnet:
 
-![[attachments/Screenshot 2025-05-29 at 3.48.30 PM.png]]
+![Screenshot 2025-05-29 at 3.48.30 PM](attachments/Screenshot%202025-05-29%20at%203.48.30%20PM.png)
 
 And looking through the *network captures*, we see host `10.0.0.130` connecting to a `SMB` Server `10.0.0.133`:
 
-![[attachments/Screenshot 2025-05-29 at 3.56.52 PM.png]]
+![Screenshot 2025-05-29 at 3.56.52 PM](attachments/Screenshot%202025-05-29%20at%203.56.52%20PM.png)
 
 ## Question 2:
 
@@ -23,11 +23,11 @@ And looking through the *network captures*, we see host `10.0.0.130` connecting 
 
 As we know now the first compromised machine is `10.0.0.130` and the machine the attacker is trying to pivot to is `10.0.0.133`, and with that in mind i started looking for `DNS` or `DHCP` packets related to `10.0.0.133`, but nothing was apparent, thus i went for the hints below:
 
-![[attachments/Screenshot 2025-05-30 at 11.27.56 AM.png]]
+![Screenshot 2025-05-30 at 11.27.56 AM](attachments/Screenshot%202025-05-30%20at%2011.27.56%20AM.png)
 
 Here, they are instructing us to go look for `SMB's`  ==`Session Setup Response`== Packets that contain a ==`NTLMSSP Challenge`== Message so the target machine can authenticate the client, and with this packet we can extract the target machine's hostname as can be seen below:
 
-![[attachments/Screenshot 2025-05-30 at 11.36.59 AM.png]] 
+![Screenshot 2025-05-30 at 11.36.59 AM](attachments/Screenshot%202025-05-30%20at%2011.36.59%20AM.png) 
 
 ## Question 3:
 
@@ -38,11 +38,11 @@ Here, they are instructing us to go look for `SMB's`  ==`Session Setup Response`
 As noted from the previous question, we saw authentication packets being exchanged, and looking through the packets from the client's side aka the `SMB's` *`Session Setup Request`* packets, we find the username the client is trying to authenticate with as show below:
 
 
-![[attachments/Screenshot 2025-05-30 at 11.47.10 AM.png]]
+![Screenshot 2025-05-30 at 11.47.10 AM](attachments/Screenshot%202025-05-30%20at%2011.47.10%20AM.png)
 
 The question's hints just for the record:
 
-![[attachments/Screenshot 2025-05-30 at 11.56.48 AM.png]]
+![Screenshot 2025-05-30 at 11.56.48 AM](attachments/Screenshot%202025-05-30%20at%2011.56.48%20AM.png)
 
 
 ## Question 4:
@@ -54,17 +54,17 @@ The question's hints just for the record:
 After `10.0.0.130`'s network traffic of file uploading on `10.0.0.133`'s `SMB` share, we notice `MS-RPC` traffic from `10.0.0.130` to `10.0.0.133`, and it seems about managing a service:
 
 
-![[attachments/Screenshot 2025-05-30 at 12.34.13 PM.png]]
+![Screenshot 2025-05-30 at 12.34.13 PM](attachments/Screenshot%202025-05-30%20at%2012.34.13%20PM.png)
 
 
 Scrolling below that we a see a file upload of a file named `PSEXESVC`:
 
 
-![[attachments/Screenshot 2025-05-30 at 12.41.13 PM.png]]
+![Screenshot 2025-05-30 at 12.41.13 PM](attachments/Screenshot%202025-05-30%20at%2012.41.13%20PM.png)
 
 Here is the Question's hints as an explanation:
 
-![[attachments/Screenshot 2025-05-30 at 12.47.27 PM.png]]
+![Screenshot 2025-05-30 at 12.47.27 PM](attachments/Screenshot%202025-05-30%20at%2012.47.27%20PM.png)
 
 ## Question 5 && Question 6:
 
@@ -78,20 +78,20 @@ Here is the Question's hints as an explanation:
 
 At the beginning of the network capture, we see a request for two `SMB`'s shares:
 
-![[attachments/Screenshot 2025-05-30 at 12.58.19 PM.png]]
+![Screenshot 2025-05-30 at 12.58.19 PM](attachments/Screenshot%202025-05-30%20at%2012.58.19%20PM.png)
 
 And we can see the `ADMIN$` share used for the file upload:
 
-![[attachments/Screenshot 2025-05-30 at 1.01.31 PM.png]]
+![Screenshot 2025-05-30 at 1.01.31 PM](attachments/Screenshot%202025-05-30%20at%201.01.31%20PM.png)
 
 Scrolling down much more reveals a pattern of read and creation requests of what seems like input/output/error output files on the `IPC$` share:
 
-![[attachments/Screenshot 2025-05-30 at 1.03.18 PM.png]]![[attachments/Screenshot 2025-05-30 at 1.04.17 PM.png]]
+![[attachments/Screenshot 2025-05-30 at 1.03.18 PM.png]]![Screenshot 2025-05-30 at 1.04.17 PM](attachments/Screenshot%202025-05-30%20at%201.04.17%20PM.png)
 
 The questions's hints explain this behavior:
 
-![[attachments/Screenshot 2025-05-30 at 1.07.34 PM.png]]
-![[attachments/Screenshot 2025-05-30 at 1.08.01 PM.png]]
+![Screenshot 2025-05-30 at 1.04.17 PM](attachments/Screenshot%202025-05-30%20at%201.04.17%20PM.png)
+![Screenshot 2025-05-30 at 1.08.01 PM](attachments/Screenshot%202025-05-30%20at%201.08.01%20PM.png)
 
 ## Question 7:
 
@@ -106,4 +106,4 @@ Applying the following filter:
 we filter out the first pivoted machine's ip, thus we find the compromised  machine `10.0.0.130`
 trying to pivot to `10.0.0.131`
 
-![[attachments/Screenshot 2025-05-30 at 1.38.28 PM.png]]
+![Screenshot 2025-05-30 at 1.38.28 PM](attachments/Screenshot%202025-05-30%20at%201.38.28%20PM.png)
