@@ -25,7 +25,7 @@ As we know now the first compromised machine is `10.0.0.130` and the machine the
 
 ![Screenshot 2025-05-30 at 11.27.56 AM](attachments/Screenshot%202025-05-30%20at%2011.27.56%20AM.png)
 
-Here, they are instructing us to go look for `SMB's`  ==`Session Setup Response`== Packets that contain a ==`NTLMSSP Challenge`== Message so the target machine can authenticate the client, and with this packet we can extract the target machine's hostname as can be seen below:
+Here, they are instructing us to go look for `SMB's`  `Session Setup Response` Packets that contain a `NTLMSSP Challenge` Message so the target machine can authenticate the client, and with this packet we can extract the target machine's hostname as can be seen below:
 
 ![Screenshot 2025-05-30 at 11.36.59 AM](attachments/Screenshot%202025-05-30%20at%2011.36.59%20AM.png) 
 
