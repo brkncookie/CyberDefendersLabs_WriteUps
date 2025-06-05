@@ -36,7 +36,7 @@ To find that, i first listed all *`IP Addresses`* associated with successful log
 ![](attachments/Screenshot%202025-06-04%20at%209.28.43%20PM.png)
 #### Here is the script:
 
-![](attachments/failed_logins.sh)
+[failed_logins.sh](attachments/failed_logins.sh)
 ## Question 5:
 - Which attacker's IP address successfully logged into the system the most number of times?
 
@@ -48,7 +48,7 @@ Run a script that basically filters out successful logins for the root user for 
 
 #### Here is the script:
 
-![](attachments/successful_logins.sh)
+[successful_logins.sh](attachments/successful_logins.sh)
 
 ## Question 6:
 - How many requests were sent to the Apache Server?
