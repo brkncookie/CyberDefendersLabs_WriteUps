@@ -1,4 +1,4 @@
-## [Hammered](https://cyberdefenders.org/blueteam-ctf-challenges/hammered/) Lab Scenario:
+## [Hammered Lab Scenario](https://cyberdefenders.org/blueteam-ctf-challenges/hammered/):
 This challenge takes you into virtual systems and confusing log data. In this challenge, as a SOC Analyst figure out what happened to this webserver honeypot using the logs from a possibly compromised server.
 
 
